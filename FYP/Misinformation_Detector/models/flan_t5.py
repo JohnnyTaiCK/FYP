@@ -27,7 +27,7 @@ from transformers import T5Tokenizer, T5ForConditionalGeneration, GenerationConf
 """
 need set max_length for longer text 
 """
-FT5_VARIANT = ["google/flan-t5-xxl.", "google/flan-t5-xl", "google/flan-t5-large", "google/flan-t5-base", "google/flan-t5-small"]
+FT5_VARIANT = ["google/flan-t5-xxl", "google/flan-t5-xl", "google/flan-t5-large", "google/flan-t5-base", "google/flan-t5-small"]
 #FT5_PATH = "/hdd2/lh/project/llms/flanT5"
 YES_TOKEN_ID = 19739
 NO_TOKEN_ID = 4168
