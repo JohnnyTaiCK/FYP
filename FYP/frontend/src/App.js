@@ -4,6 +4,11 @@ import "./App.css";
 import Axios from 'axios';
 
 function App() {
+  const settings = {
+    model: "flan_t5",
+    load_device: "cpu",
+    use_search_engine: false
+  }
   const [result, setResult] = useState('');
   const [news, setNews] = useState('');
   const handleChange = (e) => {
@@ -11,7 +16,7 @@ function App() {
   }
   const handleSubmit = (e) => {
     e.preventDefault();
-    Axios.post('http://127.0.0.1:8000/api/', {"news":news})
+    Axios.post('http://127.0.0.1:8000/api/detect/', {"news":news, "settings": settings})
       .then((response) => {
         setResult(response.data.prediction);
         console.log(result);

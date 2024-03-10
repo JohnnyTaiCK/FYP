@@ -19,6 +19,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from rest_framework import routers
+from api.views import APIViewSet
+
+router = routers.SimpleRouter()
+router.register(r'detect', APIViewSet, basename='detect')
+
 urlpatterns = [
-    path('', include(('api.routers', 'api'))),
+    path('api/', include(router.urls)),
 ]
+
+# urlpatterns = [
+#     path('', include(('api.routers', 'api'))),
+# ]
