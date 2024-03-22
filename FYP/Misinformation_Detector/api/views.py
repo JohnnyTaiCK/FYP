@@ -34,11 +34,12 @@ class APIViewSet(viewsets.ViewSet):
         
         print(request.data.get("news"))
         info = ""
-        web_content = ddg_search(request.data.get("news"))
-        f_output =  "The retrieved information from search engines is: \n{}".format(web_content)
-        info = info + web_content
+        #web_content = ddg_search(request.data.get("news"))
+        #f_output =  "The retrieved information from search engines is: \n{}".format(web_content)
+        #info = info + web_content
 
-        result = self.detect_model.answer_logics(info=f_output, gq=request.data.get("news"))
+        #result = self.detect_model.answer_logics(info=f_output, gq=request.data.get("news"))
+        result = self.detect_model.answer_logics(info=None,gq=request.data.get("news"))
         result_text = ""
 
         print(result)
