@@ -1,5 +1,5 @@
 import {React} from "react";
-import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
+import { Navbar, Container, Nav} from 'react-bootstrap';
 import  { LinkContainer } from 'react-router-bootstrap';
 
 function Header() {
@@ -13,7 +13,7 @@ function Header() {
                                 <span style={{fontWeight: 1000, color: '#136996'}}>Misinformation Detector</span> 
                             </Navbar.Brand>
                         </LinkContainer>
-                        <Navbar.Toggle aria-controls="hearder-navbar" />
+                        <Navbar.Toggle/>
                         <Navbar.Collapse id="hearder-navbar" className="justify-content-end">
                             <Nav>
                                 <LinkContainer to='/'>

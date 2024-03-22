@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Container, Form, Button, Stack } from 'react-bootstrap';
+import { Container, Form, Button } from 'react-bootstrap';
 import Axios from 'axios';
 import Header from "./header";
 
@@ -28,8 +28,8 @@ function DetectNews() {
 
   return (
     <>
-    <Header currentPage={2}/>
-    <Container fluid="lg" className="check-by-title-container">
+    <Header/>
+    <Container className="check-by-title-container" style={{width:'50%'}}>
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3">
             <Form.Label className='frm-opalq'>News Title</Form.Label>
@@ -38,7 +38,7 @@ function DetectNews() {
               type="text"
               placeholder="Enter news..."
               as="textarea"
-              rows={20}
+              rows={10}
               onChange={handleChange}
             />
           </Form.Group>
@@ -53,7 +53,7 @@ function DetectNews() {
         <br />
         <br />
         <br />
-        <br />
+        <span>hahaha</span><span>hehehehe</span><h1>kakaka</h1>
         {result}
       </Container>
     </>
