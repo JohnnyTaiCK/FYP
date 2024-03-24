@@ -29,32 +29,29 @@ function DetectNews() {
   return (
     <>
     <Header/>
-    <Container className="check-by-title-container" style={{width:'50%'}}>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3">
-            <Form.Label className='frm-opalq'>News Title</Form.Label>
-            <Form.Control
-              className='frm-moqpa'
-              type="text"
-              placeholder="Enter news..."
-              as="textarea"
-              rows={10}
-              onChange={handleChange}
-            />
-          </Form.Group>
+      <Container className="detect-news-container">
+        <Container className="detect-news-container-content_left">
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3">
+              <Form.Label className='detect-news-container-label'>Content</Form.Label>
+              <Form.Control
+                className='detect-news-container-textinput'
+                type="text"
+                placeholder="Paste text or write here..."
+                as="textarea"
+                rows={15}
+                onChange={handleChange}
+              />
+            </Form.Group>
 
-          <Button variant="primary" type="submit" className='button-17'>
-            Check
-          </Button>
-        </Form>
-      </Container>
-
-      <Container className='prediction-result-container'>
-        <br />
-        <br />
-        <br />
-        <span>hahaha</span><span>hehehehe</span><h1>kakaka</h1>
-        {result}
+            <div className="detect-news-container-buttonContainer">
+              <Button variant="primary" type="submit" className='detect-news-container-analyze_button'>
+                Analyze News
+              </Button>
+            </div>
+          </Form>
+        </Container>
+        <Container className="detect-news-container-content_right" style={{display:"flex", alignItems:"center", justifyContent:"center", fontSize:"2em"}}>{result}</Container>
       </Container>
     </>
   );

@@ -5,12 +5,12 @@ import  { LinkContainer } from 'react-router-bootstrap';
 function Header() {
     return (
         <header>
-            <Container>
+            <Container className="header-container">
                 <Navbar bg="" expand="lg">
                     <Container>
                         <LinkContainer to='/'>
                             <Navbar.Brand href="/">
-                                <span style={{fontWeight: 1000, color: '#136996'}}>Misinformation Detector</span> 
+                                <span style={{fontWeight: 1000,fontSize: "25px", color: '#136996'}}>Misinformation Detector</span> 
                             </Navbar.Brand>
                         </LinkContainer>
                         <Navbar.Toggle/>
