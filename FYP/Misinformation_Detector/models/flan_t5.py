@@ -39,7 +39,7 @@ Evidence:
 Is the message is ture? Yes or No? Response:
 """
 class Flan_T5:
-    def __init__(self, model_name: str = "google/flan-t5-xl", device: str = "cpu"):
+    def __init__(self, model_name: str = "google/flan-t5-large", device: str = "cpu"):
         self.model_name = model_name
         self.device = device 
         if model_name in FT5_VARIANT:

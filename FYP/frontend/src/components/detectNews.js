@@ -29,29 +29,35 @@ function DetectNews() {
   return (
     <>
     <Header/>
-      <Container className="detect-news-container">
-        <Container className="detect-news-container-content_left">
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3">
-              <Form.Label className='detect-news-container-label'>Content</Form.Label>
-              <Form.Control
-                className='detect-news-container-textinput'
-                type="text"
-                placeholder="Paste text or write here..."
-                as="textarea"
-                rows={15}
-                onChange={handleChange}
-              />
-            </Form.Group>
+      <Container className="detect-news-wrap">
+        <Container className="detect-news-container">
+          <Container className="detect-news-container-content_left">
+            <Form onSubmit={handleSubmit}>
+              <Form.Group>
+                <Form.Label className='detect-news-container-label'>Select the models</Form.Label>
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label className='detect-news-container-label'>Content</Form.Label>
+                <Form.Control
+                  className='detect-news-container-textinput'
+                  type="textarea"
+                  placeholder="Paste text or write here..."
+                  as="textarea"
+                  rows={15}
+                  spellCheck="false"
+                  onChange={handleChange}
+                />
+              </Form.Group>
 
-            <div className="detect-news-container-buttonContainer">
-              <Button variant="primary" type="submit" className='detect-news-container-analyze_button'>
-                Analyze News
-              </Button>
-            </div>
-          </Form>
+              <Container className="detect-news-container-buttonContainer">
+                <Button variant="primary" type="submit" className='detect-news-container-analyze_button'>
+                  Analyze News
+                </Button>
+              </Container>
+            </Form>
+          </Container>
+          <Container className="detect-news-container-content_right" style={{display:"flex", alignItems:"center", justifyContent:"center", fontSize:"2em"}}>{result}</Container>
         </Container>
-        <Container className="detect-news-container-content_right" style={{display:"flex", alignItems:"center", justifyContent:"center", fontSize:"2em"}}>{result}</Container>
       </Container>
     </>
   );
