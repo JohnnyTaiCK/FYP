@@ -32,7 +32,7 @@ code {
 }
 
 .detect-news-wrap {
-  padding-top: 100px;
+  padding-top: 80px;
   padding-left: 25px;
   padding-right: 25px;
   height: 100vh;
@@ -40,7 +40,7 @@ code {
 }
 
 .detect-news-container {
-  width: 60%;
+  width: 70%;
   padding: 0;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
   border-radius: 12px;
@@ -48,7 +48,6 @@ code {
   display: flex;
   flex-direction: row;
   overflow: hidden;
-  flex-grow: 1;
   align-items: stretch;
   justify-content: flex-start;
 }
@@ -60,13 +59,13 @@ code {
   flex-wrap: nowrap;
   align-items: stretch;
   justify-content: flex-start;
+  text-align: left;
 }
 
 .detect-news-container-content_left-models_group {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  margin-bottom: 20px;
 }
 
 .detect-news-container-content_left-models_group span {
@@ -75,7 +74,7 @@ code {
   cursor: pointer;
   padding: 5px 10px;
   border-radius: 24px;
-  font-weight: 400;
+  font-weight: large;
   margin-right: 10px;
   letter-spacing: .25px;
 }
@@ -88,8 +87,14 @@ code {
 .detect-news-container-label {
   color: #48a2f8;
   font-weight: bold; 
-  font-size: large;
+  font-size: medium;
   margin-top: 2%;
+}
+
+#model_name {
+  font-size: large;
+  font-weight: bold;
+  color: black;
 }
 
 .detect-news-container-textinput {
@@ -101,45 +106,84 @@ code {
 
 .detect-news-container-buttonContainer {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
 }
 
 .detect-news-container-analyze_button {
-    align-items: center;
-    appearance: none;
-    background-color: #fff;
-    border-radius: 24px;
-    border-style: none;
-    box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
-    box-sizing: border-box;
-    color: #3c4043;
-    cursor: pointer;
-    display: inline-flex;
-    fill: currentcolor;
-    font-family: "Google Sans",Roboto,Arial,sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    height: 48px;
-    justify-content: center;
-    letter-spacing: .25px;
-    line-height: normal;
-    max-width: 100%;
-    overflow: visible;
-    padding: 2px 24px;
-    position: relative;
-    text-align: center;
-    text-transform: none;
-    transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),opacity 15ms linear 30ms,transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    width: auto;
-    will-change: transform,opacity;
-    z-index: 0;
+  align-items: center;
+  appearance: none;
+  background-color: #fff;
+  border-radius: 24px;
+  border-style: none;
+  box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
+  box-sizing: border-box;
+  color: #3c4043;
+  cursor: pointer;
+  display: inline-flex;
+  fill: currentcolor;
+  font-family: "Google Sans",Roboto,Arial,sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  height: 48px;
+  justify-content: center;
+  letter-spacing: .25px;
+  line-height: normal;
+  max-width: 100%;
+  overflow: visible;
+  padding: 2px 24px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),opacity 15ms linear 30ms,transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: auto;
+  will-change: transform,opacity;
+  z-index: 0;
+}
+
+.detect-news-container-buttonContainer-uploadWrap {
+  border: 1px dashed black;
+  padding: 5px 20px;
+  overflow: hidden;
+  border-radius: 12px;
+  cursor: pointer;
+  margin:0;
 }
 
 .detect-news-container-content_right {
   border-left: 1px solid #E0E2E7;
-  padding-left: 0;
+  padding: 12px;
+  min-width: 40%;
   width: 40%;
+  overflow: hidden;
+  display:flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 50px;
+  font-weight: bold;
+}
+
+#reliability-bar-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+#reliability-bar-full,
+#reliability-bar-result {
+  border: 1px solid black;
+  width: 200px;
+  height: 40px;
+  transition: width 8ms ease;
+  background-color: #E0E2E7;
+}
+
+#reliability-bar-result {
+  position: absolute;
+  width: 0;
 }

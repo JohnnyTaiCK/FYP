@@ -3,12 +3,13 @@ import { Container, Form, Button } from 'react-bootstrap';
 import Axios from 'axios';
 import Header from "./header";
 
-const modelList = ["flan_t5", "next_gpt"]
+const modelList = ["Flan_T5", "NExT-GPT"]
 
 function DetectNews() {
   const [result, setResult] = useState('');
   const [news, setNews] = useState('');
   const [model, setModel] = useState(modelList[0]);
+  const [file, setFile] = useState(null);
 
   const handleChange = (e) => {
     setNews(e.target.value)
@@ -20,17 +21,27 @@ function DetectNews() {
     use_search_engine: false
   }
 
+  const handleFileUpload = (e) => {
+    const inputFile = e.target.files[0];
+    if (inputFile) {
+      setFile(inputFile);
+    }
+  }
+
   const handleSubmit = (e) => {
     console.log(settings);
     e.preventDefault();
     Axios.post('http://127.0.0.1:8000/api/detect/', {"news":news, "settings": settings})
       .then((response) => {
         setResult(response.data.prediction);
-        console.log(result);
       })
       .catch((error) => {
         console.error('Error submitting data: ', error);
       });
+
+    const realBar = document.getElementById("reliability-bar-result");
+    realBar.style.backgroundColor = "green";
+    realBar.style.width = "95px";
   };
 
   const handleModelSelect = (e) => {
@@ -38,6 +49,8 @@ function DetectNews() {
     const selectedModelNum = element.getAttribute('value');
     setModel(modelList[selectedModelNum]);
   };
+
+  const renderUploadedFile = (<span style={{fontSize:"small"}}>{file?.name}</span>);
 
   return (
     <>
@@ -52,9 +65,9 @@ function DetectNews() {
                   <span onClick={handleModelSelect} value="0">Flan_T5</span>
                   <span onClick={handleModelSelect} value="1">NExT-GPT</span>
                 </Container>
-
-                <Container>Current selected model: {model}</Container>
-                
+                <Form.Label className="detect-news-container-label">
+                  Current loaded model: <span id="model_name">{model}</span>
+                </Form.Label>
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label className='detect-news-container-label'>Content</Form.Label>
@@ -70,13 +83,27 @@ function DetectNews() {
               </Form.Group>
 
               <Container className="detect-news-container-buttonContainer">
-                <Button variant="primary" type="submit" className='detect-news-container-analyze_button'>
-                  Analyze News
-                </Button>
+                <div>
+                  <Button variant="primary" type="submit" className='detect-news-container-analyze_button'>
+                    Analyze News
+                  </Button>
+                </div>
+                <div style={{display:"flex", flexDirection:"column", textAlign:"center", maxWidth:"30%", justifySelf:"flex-end", overflow:"visible"}}>
+                  <Form.Label className="detect-news-container-buttonContainer-uploadWrap">
+                    <input onChange={handleFileUpload} type="file" accept=".pdf, .docx, .jpg, .png" style={{display:"none"}} />
+                    {file ? renderUploadedFile : <span>Upload file</span>}
+                  </Form.Label>
+                </div>
               </Container>
             </Form>
           </Container>
-          <Container className="detect-news-container-content_right" style={{display:"flex", alignItems:"center", justifyContent:"center", fontSize:"2em"}}>{result}</Container>
+          <Container className="detect-news-container-content_right">
+            <div>%</div>
+            <div id="reliability-bar-wrap">
+              <div id="reliability-bar-full"></div>
+              <div id="reliability-bar-result"></div>
+            </div>
+          </Container>
         </Container>
       </Container>
     </>
