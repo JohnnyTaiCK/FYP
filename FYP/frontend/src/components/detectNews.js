@@ -3,18 +3,25 @@ import { Container, Form, Button } from 'react-bootstrap';
 import Axios from 'axios';
 import Header from "./header";
 
+const modelList = ["flan_t5", "next_gpt"]
+
 function DetectNews() {
-  const settings = {
-    model: "flan_t5",
-    load_device: "cpu",
-    use_search_engine: false
-  }
   const [result, setResult] = useState('');
   const [news, setNews] = useState('');
+  const [model, setModel] = useState(modelList[0]);
+
   const handleChange = (e) => {
     setNews(e.target.value)
   }
+
+  const settings = {
+    model: model,
+    load_device: "cpu",
+    use_search_engine: false
+  }
+
   const handleSubmit = (e) => {
+    console.log(settings);
     e.preventDefault();
     Axios.post('http://127.0.0.1:8000/api/detect/', {"news":news, "settings": settings})
       .then((response) => {
@@ -26,6 +33,12 @@ function DetectNews() {
       });
   };
 
+  const handleModelSelect = (e) => {
+    const element = e.target
+    const selectedModelNum = element.getAttribute('value');
+    setModel(modelList[selectedModelNum]);
+  };
+
   return (
     <>
     <Header/>
@@ -35,6 +48,13 @@ function DetectNews() {
             <Form onSubmit={handleSubmit}>
               <Form.Group>
                 <Form.Label className='detect-news-container-label'>Select the models</Form.Label>
+                <Container className="detect-news-container-content_left-models_group">
+                  <span onClick={handleModelSelect} value="0">Flan_T5</span>
+                  <span onClick={handleModelSelect} value="1">NExT-GPT</span>
+                </Container>
+
+                <Container>Current selected model: {model}</Container>
+                
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label className='detect-news-container-label'>Content</Form.Label>
