@@ -5,7 +5,7 @@ import  { LinkContainer } from 'react-router-bootstrap';
 function Header() {
     return (
         <header>
-            <Container className="header-container">
+            <Container>
                 <Navbar bg="" expand="lg">
                     <Container>
                         <LinkContainer to='/'>
