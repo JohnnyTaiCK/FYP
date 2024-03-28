@@ -39,12 +39,12 @@ class APIViewSet(viewsets.ViewSet):
         # info = info + web_content
 
         #result = self.detect_model.answer_logics(info=f_output, gq=request.data.get("news"))
-        result = self.detect_model.answer_logics(info=None,gq=request.data.get("news"))
+        result_score = self.detect_model.answer_logics(info=None,gq=request.data.get("news"))
         result_text = ""
 
-        print(result)
-        if(result > 0.5):
+        print(result_score)
+        if(result_score > 0.5):
             result_text = "True"
         else:
             result_text = "False"
-        return Response({'prediction': result_text})
+        return Response({'prediction': result_text, 'score': result_score})

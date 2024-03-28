@@ -10,6 +10,7 @@ function DetectNews() {
   const [news, setNews] = useState('');
   const [model, setModel] = useState(modelList[0]);
   const [file, setFile] = useState(null);
+  const [scoreText, setScoreText] = useState('');
 
   const handleChange = (e) => {
     setNews(e.target.value)
@@ -29,19 +30,22 @@ function DetectNews() {
   }
 
   const handleSubmit = (e) => {
-    console.log(settings);
     e.preventDefault();
+    if (news.length < 20) {
+      return;
+    }
+    console.log(settings);
     Axios.post('http://127.0.0.1:8000/api/detect/', {"news":news, "settings": settings})
       .then((response) => {
         setResult(response.data.prediction);
+        const realBar = document.getElementById("reliability-bar-result");
+        realBar.style.backgroundColor = "lightgreen";
+        realBar.style.width = 200 * response.data.score + "px";
+        setScoreText(Math.round(response.data.score * 100));
       })
       .catch((error) => {
         console.error('Error submitting data: ', error);
       });
-
-    const realBar = document.getElementById("reliability-bar-result");
-    realBar.style.backgroundColor = "green";
-    realBar.style.width = "95px";
   };
 
   const handleModelSelect = (e) => {
@@ -98,10 +102,16 @@ function DetectNews() {
             </Form>
           </Container>
           <Container className="detect-news-container-content_right">
-            <div>%</div>
+            <div id="score-indicator">{scoreText}%</div>
             <div id="reliability-bar-wrap">
               <div id="reliability-bar-full"></div>
               <div id="reliability-bar-result"></div>
+            </div>
+
+            {result === "" ? <div id="result-indicator"></div>: <div id="result-indicator">Predicted as {result === "True" ? "real" : "fake"} information!</div>}
+
+            <div id="explanation-indicator">
+              awdawd
             </div>
           </Container>
         </Container>
