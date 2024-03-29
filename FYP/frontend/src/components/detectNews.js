@@ -111,7 +111,7 @@ function DetectNews() {
             {result === "" ? <div id="result-indicator"></div>: <div id="result-indicator">Predicted as {result === "True" ? "real" : "fake"} information!</div>}
 
             <div id="explanation-indicator">
-              awdawd
+              This is the explanation div
             </div>
           </Container>
         </Container>

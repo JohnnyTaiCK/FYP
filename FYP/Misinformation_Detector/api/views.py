@@ -29,8 +29,8 @@ class APIViewSet(viewsets.ViewSet):
 
     def create(self,request):
         settings = request.data.get("settings")
-        if settings["load_device"] != "cpu" and torch.cuda.is_available():
-            self.detect_model.model.to("cuda:1")
+        # if settings["load_device"] != "cpu" and torch.cuda.is_available():
+        #     self.detect_model.model.to("cuda:1")
         
         print(request.data.get("news"))
         info = ""

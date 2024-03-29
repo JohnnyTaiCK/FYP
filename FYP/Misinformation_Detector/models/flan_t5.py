@@ -46,7 +46,7 @@ class Flan_T5:
             #path = os.path.join(FT5_PATH, model_name)
             self.tokenizer = T5Tokenizer.from_pretrained(model_name)
             if device != "cpu":
-                device_map = "auto"
+                device_map = "cuda"
             else:
                 device_map = 'cpu'
             self.model = T5ForConditionalGeneration.from_pretrained(model_name, device_map=device_map)
