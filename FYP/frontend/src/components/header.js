@@ -20,7 +20,7 @@ function Header() {
                                     <Nav.Link>
                                         <div>
                                             <li>
-                                                <div>Detect News</div>
+                                                <div className="nav-bar-item">Detect News</div>
                                             </li>
                                         </div>
                                     </Nav.Link>
@@ -31,7 +31,7 @@ function Header() {
                                     <Nav.Link>
                                         <div>
                                             <li>
-                                                <div>Help</div>
+                                                <div className="nav-bar-item">Help</div>
                                             </li>
                                         </div>
                                     </Nav.Link>

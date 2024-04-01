@@ -60,11 +60,6 @@ class Flan_T5:
 
     def generate(self, input_string, **generator_args):
         #  Converts a string to a sequence of ids (integer), using the tokenizer and vocabulary. not for batch operation
-        #
-        #
-        #
-        #
-        #
         input_ids = self.tokenizer.encode(input_string, return_tensors="pt").to(self.device) 
         with torch.no_grad():
             res = self.model.generate(input_ids, **generator_args)
@@ -74,7 +69,7 @@ class Flan_T5:
         if info is None:
             input_string = "{}\n Yes or No? Response:".format(gq)
         else:
-            input_string = "{}\n Based on the above information, {} Yes or No? Response:".format(info, gq)
+            input_string = "{}\n determine if the following news are real or fake based on the above information\n The news: {}\n Yes or No? Response:".format(info, gq)
         # answer question with FLAN-T5 and do sampling for robustness
         # do_sample=True, temperature=1, num_return_sequences=10
         answer_texts = self.generate(input_string,
@@ -115,6 +110,7 @@ class Flan_T5:
                 output_scores=True,
                 max_new_tokens=1,
             )
+            
             v_yes_exp = (
                 torch.exp(output.scores[0][:, self.yes_token_id]).cpu().numpy()[0]
             )
@@ -127,3 +123,5 @@ class Flan_T5:
         f_score = float(np.mean(scores))
         return f_score
 
+# if __name__ == "__main__":
+#   print(preprocess_pipe(["Germany is a country in Europe"]))

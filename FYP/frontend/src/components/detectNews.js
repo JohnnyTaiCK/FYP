@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Container, Form, Button } from 'react-bootstrap';
 import Axios from 'axios';
 import Header from "./header";
@@ -7,19 +7,24 @@ const modelList = ["Flan_T5", "NExT-GPT"]
 
 function DetectNews() {
   const [result, setResult] = useState('');
+  const [newsTitle, setNewsTitle] = useState('');
   const [news, setNews] = useState('');
-  const [model, setModel] = useState(modelList[0]);
+  const [model, setModel] = useState(0);
   const [file, setFile] = useState(null);
   const [scoreText, setScoreText] = useState('');
+  const [isLoadingModel, setIsLoadingModel] = useState(false)
 
-  const handleChange = (e) => {
+  const handleNewsTitleChange = (e) => {
+    setNewsTitle(e.target.value);
+  }
+
+  const handleNewsChange = (e) => {
     setNews(e.target.value)
   }
 
   const settings = {
     model: model,
     load_device: "cpu",
-    use_search_engine: false
   }
 
   const handleFileUpload = (e) => {
@@ -35,7 +40,7 @@ function DetectNews() {
       return;
     }
     console.log(settings);
-    Axios.post('http://127.0.0.1:8000/api/detect/', {"news":news, "settings": settings})
+    Axios.post('http://127.0.0.1:8000/api/detect/', {"title": newsTitle,"news":news})
       .then((response) => {
         setResult(response.data.prediction);
         const realBar = document.getElementById("reliability-bar-result");
@@ -51,7 +56,21 @@ function DetectNews() {
   const handleModelSelect = (e) => {
     const element = e.target
     const selectedModelNum = element.getAttribute('value');
-    setModel(modelList[selectedModelNum]);
+    if (selectedModelNum == model) {
+      return;
+    }
+    settings['model'] = selectedModelNum;
+    setIsLoadingModel(true);
+    Axios.post('http://127.0.0.1:8000/api/detect/', {"settings": settings}, {timeout:5000})
+      .then((response) => {
+        setModel(selectedModelNum);
+      })
+      .catch((error) => {
+        console.error('Error submitting data: ', error);
+        settings['model'] = model;
+      }).finally(() => {
+        setIsLoadingModel(false)
+      });
   };
 
   const renderUploadedFile = (<span style={{fontSize:"small"}}>{file?.name}</span>);
@@ -70,19 +89,21 @@ function DetectNews() {
                   <span onClick={handleModelSelect} value="1">NExT-GPT</span>
                 </Container>
                 <Form.Label className="detect-news-container-label">
-                  Current loaded model: <span id="model_name">{model}</span>
+                  Current loaded model: <span id="model_name">{isLoadingModel ? "Loading..." : modelList[model]}</span>
                 </Form.Label>
               </Form.Group>
               <Form.Group className="mb-3">
+                <Form.Label className='detect-news-container-label'>Title</Form.Label>
+                <Form.Control type="text" onChange={handleNewsTitleChange} />
                 <Form.Label className='detect-news-container-label'>Content</Form.Label>
                 <Form.Control
                   className='detect-news-container-textinput'
                   type="textarea"
                   placeholder="Paste text or write here..."
                   as="textarea"
-                  rows={15}
+                  rows={15} 
                   spellCheck="false"
-                  onChange={handleChange}
+                  onChange={handleNewsChange}
                 />
               </Form.Group>
 
@@ -111,7 +132,7 @@ function DetectNews() {
             {result === "" ? <div id="result-indicator"></div>: <div id="result-indicator">Predicted as {result === "True" ? "real" : "fake"} information!</div>}
 
             <div id="explanation-indicator">
-              This is the explanation div
+              
             </div>
           </Container>
         </Container>
