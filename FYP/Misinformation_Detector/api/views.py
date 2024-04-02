@@ -41,10 +41,8 @@ class APIViewSet(viewsets.ViewSet):
         info = ""
         if processed_title != "":
             web_content = ddg_search(processed_title)
-            print("1")
         else:
             web_content = ddg_search(processed_news)
-            print("2")
         f_output =  "The retrieved information from search engines is: \n{}".format(web_content)
         info = info + web_content
 
