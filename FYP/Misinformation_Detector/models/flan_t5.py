@@ -69,7 +69,7 @@ class Flan_T5:
         if info is None:
             input_string = "{}\n Yes or No? Response:".format(gq)
         else:
-            input_string = "{}\n determine if the following news are real or fake based on the above information\n The news: {}\n Yes or No? Response:".format(info, gq)
+            input_string = "{}\n determine if the following news is real or fake based on the above information\n The news: {}\n Yes or No? Response:".format(info, gq)
         # answer question with FLAN-T5 and do sampling for robustness
         # do_sample=True, temperature=1, num_return_sequences=10
         answer_texts = self.generate(input_string,
@@ -122,6 +122,12 @@ class Flan_T5:
             scores.append(score)
         f_score = float(np.mean(scores))
         return f_score
+    
+    def answer_explanation():
+        pass
 
-# if __name__ == "__main__":
-#   print(preprocess_pipe(["Germany is a country in Europe"]))
+if __name__ == "__main__":
+  md = Flan_T5()
+  input_ids = md.tokenizer.encode("is Germany is a country in Europe? please explain why", return_tensors="pt")
+  outputs = md.model.generate(input_ids)
+  print(md.tokenizer.batch_decode(outputs, skip_special_tokens=True))
