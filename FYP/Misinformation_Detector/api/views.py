@@ -33,8 +33,20 @@ class APIViewSet(viewsets.ViewSet):
             if settings['model'] == 0:
                 self.detect_model = Flan_T5(device=settings['load_device'])
             return Response("successfully updated model")
+
+        input_news_title = request.data.get("title")
+        input_news = request.data.get("news")
+
+        [processed_title, processed_news] = self.text_preprocessor.preprocess_pipe([input_news_title, input_news])
         info = ""
-        web_content = ddg_search(request.data.get("news"))
+        if processed_title != "":
+            web_content = ddg_search(processed_title)
+        else:
+            search_keywords = self.text_preprocessor.stopword_removal(processed_news)
+            if len(search_keywords) > 30:
+                search_keywords = search_keywords[:30]
+            web_content = ddg_search(search_keywords)
+        
         f_output =  "The retrieved information from search engines is: \n{}".format(web_content)
         info = info + web_content
 
@@ -42,7 +54,7 @@ class APIViewSet(viewsets.ViewSet):
         # print("\n processed news title: ", processed_title)
         # print("\n processed news: ", processed_news)
 
-        result_score = self.detect_model.answer_logics(info=f_output, gq=request.data.get("news"))
+        result_score = self.detect_model.answer_logics(info=f_output, gq=input_news)
         result_text = ""
 
         print(result_score)
