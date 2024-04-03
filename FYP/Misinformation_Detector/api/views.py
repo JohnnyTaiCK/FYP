@@ -3,10 +3,10 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from models.flan_t5 import Flan_T5
 from models.chatgpt import OpenAIModel
-from duckduckgo_search import DDGS
 import torch
 import itertools
 from .text_preprocessor import Text_Preprocessor
+from duckduckgo_search import DDGS
 
 def ddg_search(tosearch):
     web_content = ""

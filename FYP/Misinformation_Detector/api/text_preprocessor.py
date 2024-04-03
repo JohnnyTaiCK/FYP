@@ -1,4 +1,6 @@
 import nltk
+nltk.download('punkt')
+nltk.download('stopwords')
 from nltk import pos_tag
 from nltk.corpus import stopwords
 import string
