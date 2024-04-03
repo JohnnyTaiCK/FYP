@@ -126,8 +126,8 @@ class Flan_T5:
     def answer_explanation():
         pass
 
-if __name__ == "__main__":
-  md = Flan_T5()
-  input_ids = md.tokenizer.encode("is Germany is a country in Europe? please explain why", return_tensors="pt")
-  outputs = md.model.generate(input_ids)
-  print(md.tokenizer.batch_decode(outputs, skip_special_tokens=True))
+# if __name__ == "__main__":
+#   md = Flan_T5()
+#   input_ids = md.tokenizer.encode("is Germany is a country in Europe? please explain why", return_tensors="pt")
+#   outputs = md.model.generate(input_ids)
+#   print(md.tokenizer.batch_decode(outputs, skip_special_tokens=True))

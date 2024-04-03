@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Container, Form, Button } from 'react-bootstrap';
 import Axios from 'axios';
 import Header from "./header";
@@ -56,7 +56,7 @@ function DetectNews() {
   const handleModelSelect = (e) => {
     const element = e.target
     const selectedModelNum = element.getAttribute('value');
-    if (selectedModelNum == model) {
+    if (selectedModelNum === model) {
       return;
     }
     settings['model'] = selectedModelNum;
@@ -101,7 +101,7 @@ function DetectNews() {
                   type="textarea"
                   placeholder="Paste text or write here..."
                   as="textarea"
-                  rows={15} 
+                  rows={13} 
                   spellCheck="false"
                   onChange={handleNewsChange}
                 />

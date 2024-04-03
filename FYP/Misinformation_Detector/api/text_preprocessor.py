@@ -30,9 +30,3 @@ class Text_Preprocessor:
         for doc in texts:
             preproc_pipe.append(self.text_processing(str(doc)))
         return preproc_pipe
-
-
-if __name__ == "__main__":
-  tp = Text_Preprocessor()
-  answer = tp.preprocess_pipe(["Germany is a, country in Europe."])
-  print(tp.stopword_removal(answer[0]))
