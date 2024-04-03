@@ -32,7 +32,7 @@ class Text_Preprocessor:
         return preproc_pipe
 
 
-# if __name__ == "__main__":
-#   tp = Text_Preprocessor()
-#   answer = tp.preprocess_pipe(["Germany is a, country in Europe."])
-#   print(tp.stopword_removal(answer[0]))
+if __name__ == "__main__":
+  tp = Text_Preprocessor()
+  answer = tp.preprocess_pipe(["Germany is a, country in Europe."])
+  print(tp.stopword_removal(answer[0]))
