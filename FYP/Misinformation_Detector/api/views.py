@@ -42,7 +42,11 @@ class APIViewSet(viewsets.ViewSet):
         if processed_title != "":
             web_content = ddg_search(processed_title)
         else:
-            web_content = ddg_search(processed_news)
+            search_keywords = self.text_preprocessor.stopword_removal(processed_news)
+            if len(search_keywords) > 30:
+                search_keywords = search_keywords[:30]
+            web_content = ddg_search(search_keywords)
+        
         f_output =  "The retrieved information from search engines is: \n{}".format(web_content)
         info = info + web_content
 

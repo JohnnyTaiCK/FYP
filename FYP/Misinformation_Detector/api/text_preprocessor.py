@@ -19,7 +19,7 @@ class Text_Preprocessor:
         text = self.remove_punctuation(lower_text)
         return text
     
-    def stopword_removal(self, text: str):
+    def stopword_removal(self, text: str) -> list[str]:
         words = word_tokenize(text)
         stop_words = stopwords.words('english')
         return [word for word in words if word not in stop_words]
@@ -32,7 +32,7 @@ class Text_Preprocessor:
         return preproc_pipe
 
 
-if __name__ == "__main__":
-  tp = Text_Preprocessor()
-  answer = tp.preprocess_pipe(["Germany is a, country in Europe."])
-  print(tp.stopword_removal(answer[0]))
+# if __name__ == "__main__":
+#   tp = Text_Preprocessor()
+#   answer = tp.preprocess_pipe(["Germany is a, country in Europe."])
+#   print(tp.stopword_removal(answer[0]))

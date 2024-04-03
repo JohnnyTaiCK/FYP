@@ -156,17 +156,3 @@ class OpenAIModel:
         )
         generated_text = response['choices'][0]['text'].strip()
         return generated_text
-    #
-    # def token_counting(self, input):
-    #     if self.model_name in ['text-davinci-002', 'text-davinci-003']:
-    #         encoding = tiktoken.get_encoding("p50k_base")
-    #     elif self.model_name in ['gpt-3.5-turbo', 'gpt-4', 'text-embedding-ada-002']:
-    #         encoding = tiktoken.get_encoding("cl100k_base")
-    #     elif self.model_name in ['davinci']:
-    #         encoding = tiktoken.get_encoding("gpt2")
-    #     else:
-    #         "wrong model for token counting"
-    #         exit()
-    #     num_tokens = encoding.encode(input)
-    #     return num_tokens
-    #
