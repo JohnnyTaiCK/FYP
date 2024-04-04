@@ -223,6 +223,8 @@ code {
   min-width: 100%;
   text-align: start;
   padding: 12px;
+  max-height: 450px;
+  overflow-y: scroll;
 }
 
 @media screen and (max-width: 1000px) {

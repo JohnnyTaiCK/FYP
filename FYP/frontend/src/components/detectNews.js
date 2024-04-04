@@ -40,7 +40,13 @@ function DetectNews() {
     if (news.length < 20) {
       return;
     }
-    console.log(settings);
+
+    setScoreText("");
+    setReasonText("");
+    setResult("");
+    const realBar = document.getElementById("reliability-bar-result");
+    realBar.style.width = "0";
+    
     Axios.post('http://127.0.0.1:8000/api/detect/', {"title": newsTitle,"news":news})
       .then((response) => {
         setResult(response.data.prediction);
@@ -48,11 +54,11 @@ function DetectNews() {
         realBar.style.backgroundColor = "lightgreen";
         realBar.style.width = 200 * response.data.score + "px";
         setScoreText(Math.round(response.data.score * 100));
-        setReasonText(response.data.reason)
+        setReasonText(response.data.reason);
       })
       .catch((error) => {
         console.error('Error submitting data: ', error);
-      });
+      }).finally(() => {setFile(null);});
   };
 
   const handleModelSelect = (e) => {

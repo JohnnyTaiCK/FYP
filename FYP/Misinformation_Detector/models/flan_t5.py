@@ -28,10 +28,6 @@ from transformers import T5Tokenizer, T5ForConditionalGeneration, GenerationConf
 need set max_length for longer text 
 """
 FT5_VARIANT = ["google/flan-t5-xxl", "google/flan-t5-xl", "google/flan-t5-large", "google/flan-t5-base", "google/flan-t5-small"]
-#FT5_PATH = "/hdd2/lh/project/llms/flanT5"
-YES_TOKEN_ID = 19739
-NO_TOKEN_ID = 4168
-
 
 """
 Message:
@@ -43,7 +39,6 @@ class Flan_T5:
         self.model_name = model_name
         self.device = device 
         if model_name in FT5_VARIANT:
-            #path = os.path.join(FT5_PATH, model_name)
             self.tokenizer = T5Tokenizer.from_pretrained(model_name)
             if device != "cpu":
                 device_map = "cuda"
@@ -127,9 +122,9 @@ class Flan_T5:
         pass
 
 
-import pytesseract
-from PIL import Image
-if __name__ == "__main__":
-    image = Image.open("download.jpg")
-    text = pytesseract.image_to_string(image)
-    print(text)
+# import pytesseract
+# from PIL import Image
+# if __name__ == "__main__":
+#     image = Image.open("download.jpg")
+#     text = pytesseract.image_to_string(image)
+#     print(text)

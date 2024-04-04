@@ -7,6 +7,8 @@ import torch
 import itertools
 from .text_preprocessor import Text_Preprocessor
 from duckduckgo_search import DDGS
+import pytesseract
+from PIL import Image
 
 from dotenv import load_dotenv
 import os
@@ -28,7 +30,7 @@ def generate_explanation(model, detect_news, label, web_content):
     prompt = [
             {"role": "system",
              "content": """You work as a misinformation detection assistant. You will be given an information and a reference label (e.g., True or False) for the truthfulness of the Information. 
-             You task is to give an integrated convincing explanation for the label based on information itself. 
+             You task is to give an integrated convincing explanation for the label based on information itself.
                 """},
             {"role": "user", "content": "Information: {}\n Reference Label(Don't mention it): {}\n Supplement(Don't mention it): {}\n"},
         ]
@@ -45,7 +47,7 @@ class APIViewSet(viewsets.ViewSet):
     OPENAI_KEY = os.getenv("OPENAI_KEY")
 
     detect_model = Flan_T5()
-    explain_model = OpenAIModel(OPENAI_KEY, "gpt-3.5-turbo", max_new_tokens=600)
+    explain_model = OpenAIModel(OPENAI_KEY, "gpt-3.5-turbo", max_new_tokens=1000)
     text_preprocessor = Text_Preprocessor() 
 
     def create(self,request):
