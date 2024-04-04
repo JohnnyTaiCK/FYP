@@ -12,6 +12,8 @@ header {
   position: absolute;
   width: 100%;
   top: 5px;
+  left: 0;
+  right: 0;
   font-weight: bolder;
 }
 
@@ -37,15 +39,19 @@ code {
     monospace;
 }
 
+.main-wrap {
+  display: flex;
+  position: relative;
+}
+
 .detect-news-wrap {
   padding-top: 80px;
   padding-left: 25px;
   padding-right: 25px;
-  height: 100vh;
-  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 .detect-news-container {
@@ -215,4 +221,32 @@ code {
   border-top: 1px solid #E0E2E7;
   font-size: medium;
   min-width: 100%;
+  text-align: start;
+  padding: 12px;
+}
+
+@media screen and (max-width: 1000px) {
+  .main-wrap {
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 100;
+  }
+
+  .detect-news-container {
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+
+  .detect-news-container-content_right {
+    border-left: 0;
+    min-width: 100%;
+    min-height: 100%;
+  }
+  
+}
+
+@media screen and (min-width: 760px) and (min-height: 600px) {
+  .detect-news-wrap {
+    min-height: 100vh;
+  }
 }

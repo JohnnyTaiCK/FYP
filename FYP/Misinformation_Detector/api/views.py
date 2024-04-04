@@ -8,6 +8,9 @@ import itertools
 from .text_preprocessor import Text_Preprocessor
 from duckduckgo_search import DDGS
 
+from dotenv import load_dotenv
+import os
+
 def ddg_search(tosearch):
     web_content = ""
     count = 1
@@ -21,9 +24,28 @@ def ddg_search(tosearch):
         print("\nweb content: ", web_content)
     return web_content
 
+def generate_explanation(model, detect_news, label, web_content):
+    prompt = [
+            {"role": "system",
+             "content": """You work as a misinformation detection assistant. You will be given an information and a reference label (e.g., True or False) for the truthfulness of the Information. 
+             You task is to give an integrated convincing explanation for the label based on information itself. 
+                """},
+            {"role": "user", "content": "Information: {}\n Reference Label(Don't mention it): {}\n Supplement(Don't mention it): {}\n"},
+        ]
+    
+    prompt[-1]["content"] = prompt[-1]["content"].format(detect_news, label, web_content)
+    output = model.chat_generate(prompt)
+    return output
+
+
 class APIViewSet(viewsets.ViewSet):
 
+    # Load environment variables from .env file
+    load_dotenv()
+    OPENAI_KEY = os.getenv("OPENAI_KEY")
+
     detect_model = Flan_T5()
+    explain_model = OpenAIModel(OPENAI_KEY, "gpt-3.5-turbo", max_new_tokens=600)
     text_preprocessor = Text_Preprocessor() 
 
     def create(self,request):
@@ -54,7 +76,7 @@ class APIViewSet(viewsets.ViewSet):
         # print("\n processed news title: ", processed_title)
         # print("\n processed news: ", processed_news)
 
-        result_score = self.detect_model.answer_logics(info=f_output, gq=input_news)
+        result_score = self.detect_model.answer_logics(info=f_output, gq=processed_news)
         result_text = ""
 
         print(result_score)
@@ -62,4 +84,9 @@ class APIViewSet(viewsets.ViewSet):
             result_text = "True"
         else:
             result_text = "False"
-        return Response({'prediction': result_text, 'score': result_score})
+
+        
+        explanation = generate_explanation(self.explain_model, processed_news, result_text, web_content)
+        return Response({'prediction': result_text, 'score': result_score, 'reason': explanation})
+
+

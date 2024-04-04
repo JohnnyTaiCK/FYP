@@ -13,6 +13,7 @@ function DetectNews() {
   const [file, setFile] = useState(null);
   const [scoreText, setScoreText] = useState('');
   const [isLoadingModel, setIsLoadingModel] = useState(false)
+  const [reasonText, setReasonText] = useState('')
 
   const handleNewsTitleChange = (e) => {
     setNewsTitle(e.target.value);
@@ -47,6 +48,7 @@ function DetectNews() {
         realBar.style.backgroundColor = "lightgreen";
         realBar.style.width = 200 * response.data.score + "px";
         setScoreText(Math.round(response.data.score * 100));
+        setReasonText(response.data.reason)
       })
       .catch((error) => {
         console.error('Error submitting data: ', error);
@@ -77,45 +79,46 @@ function DetectNews() {
 
   return (
     <>
+    <div className="main-wrap">
     <Header/>
-      <Container className="detect-news-wrap">
-        <Container className="detect-news-container">
-          <Container className="detect-news-container-content_left">
-            <Form onSubmit={handleSubmit}>
-              <Form.Group>
-                <Form.Label className='detect-news-container-label'>Select the models</Form.Label>
-                <Container className="detect-news-container-content_left-models_group">
-                  <span onClick={handleModelSelect} value="0">Flan_T5</span>
-                  <span onClick={handleModelSelect} value="1">NExT-GPT</span>
-                </Container>
-                <Form.Label className="detect-news-container-label">
-                  Current loaded model: <span id="model_name">{isLoadingModel ? "Loading..." : modelList[model]}</span>
-                </Form.Label>
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label className='detect-news-container-label'>Title</Form.Label>
-                <Form.Control type="text" onChange={handleNewsTitleChange} />
-                <Form.Label className='detect-news-container-label'>Content</Form.Label>
-                <Form.Control
-                  className='detect-news-container-textinput'
-                  type="textarea"
-                  placeholder="Paste text or write here..."
-                  as="textarea"
-                  rows={13} 
-                  spellCheck="false"
-                  onChange={handleNewsChange}
-                />
-              </Form.Group>
+    <Container className="detect-news-wrap">
+      <Container className="detect-news-container">
+        <Container className="detect-news-container-content_left">
+          <Form onSubmit={handleSubmit}>
+            <Form.Group>
+              <Form.Label className='detect-news-container-label'>Select the models</Form.Label>
+              <Container className="detect-news-container-content_left-models_group">
+                <span onClick={handleModelSelect} value="0">Flan_T5</span>
+                <span onClick={handleModelSelect} value="1">NExT-GPT</span>
+              </Container>
+              <Form.Label className="detect-news-container-label">
+                Current loaded model: <span id="model_name">{isLoadingModel ? "Loading..." : modelList[model]}</span>
+              </Form.Label>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label className='detect-news-container-label'>Title</Form.Label>
+              <Form.Control type="text" onChange={handleNewsTitleChange} />
+              <Form.Label className='detect-news-container-label'>Content</Form.Label>
+              <Form.Control
+                className='detect-news-container-textinput'
+                type="textarea"
+                placeholder="Paste text or write here..."
+                as="textarea"
+                rows={13} 
+                spellCheck="false"
+                onChange={handleNewsChange}
+              />
+            </Form.Group>
 
               <Container className="detect-news-container-buttonContainer">
                 <div>
                   <Button variant="primary" type="submit" className='detect-news-container-analyze_button'>
-                    Analyze News
+                    Analyze
                   </Button>
                 </div>
                 <div style={{display:"flex", flexDirection:"column", textAlign:"center", maxWidth:"30%", justifySelf:"flex-end", overflow:"visible"}}>
                   <Form.Label className="detect-news-container-buttonContainer-uploadWrap">
-                    <input onChange={handleFileUpload} type="file" accept=".pdf, .docx, .jpg, .png" style={{display:"none"}} />
+                    <input onChange={handleFileUpload} type="file" accept=".jpg, .png" style={{display:"none"}} />
                     {file ? renderUploadedFile : <span>Upload file</span>}
                   </Form.Label>
                 </div>
@@ -132,11 +135,12 @@ function DetectNews() {
             {result === "" ? <div id="result-indicator"></div>: <div id="result-indicator">Predicted as {result === "True" ? "real" : "fake"} information!</div>}
 
             <div id="explanation-indicator">
-              
+              {reasonText}
             </div>
           </Container>
         </Container>
       </Container>
+    </div>
     </>
   );
 }
