@@ -109,6 +109,7 @@ class Flan_T5:
             v_yes_exp = (
                 torch.exp(output.scores[0][:, self.yes_token_id]).cpu().numpy()[0]
             )
+
             v_no_exp = (
                 torch.exp(output.scores[0][:, self.no_token_id]).cpu().numpy()[0]
             )
@@ -117,14 +118,10 @@ class Flan_T5:
             scores.append(score)
         f_score = float(np.mean(scores))
         return f_score
-    
-    def answer_explanation():
-        pass
 
 
 # import pytesseract
 # from PIL import Image
-# if __name__ == "__main__":
-#     image = Image.open("download.jpg")
-#     text = pytesseract.image_to_string(image)
-#     print(text)
+if __name__ == "__main__":
+    tp = Flan_T5()
+    print(tp.answer_logics("Germany is a country in Europe"))

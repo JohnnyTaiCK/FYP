@@ -37,9 +37,9 @@ function DetectNews() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (news.length < 20) {
-      return;
-    }
+    // if (news.length < 20) {
+    //   return;
+    // }
 
     setScoreText("");
     setReasonText("");
